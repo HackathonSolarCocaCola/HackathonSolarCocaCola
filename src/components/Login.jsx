@@ -14,13 +14,15 @@ const Login = ({ onLogin }) => {
   }, []);
 
   const data = [
-    {email: "gestor@email.com", senha: 'gestor'},
-    {email: "colaborador@email.com", senha: 'colaborador'}
-  ]
-  const handleLoginClick = (type) => {
-    if (email === data.email && password === data.password) {
+    {email: "gestor@email.com", password: 'gestor', type: 'gestor'},
+    {email: "colaborador@email.com", password: 'colaborador', type: 'colaborador'}
+  ];
+
+  const handleLoginClick = () => {
+    const user = data.find(u => u.email === email && u.password === password);
+    if (user) {
       if (hasAcceptedTerms) {
-        onLogin(type);
+        onLogin(user.type);
       } else {
         alert('Você deve aceitar os termos e condições para continuar.');
       }
@@ -50,8 +52,7 @@ const Login = ({ onLogin }) => {
       />
       <label>Aceito os termos e condições</label>
       <br />
-      <button onClick={() => handleLoginClick('gestor')}>Login como Gestor</button>
-      <button onClick={() => handleLoginClick('colaborador')}>Login como Colaborador</button>
+      <button onClick={handleLoginClick}>Login</button>
       <button onClick={handleForgotPassword}>Esqueci a senha</button>
     </div>
   );
